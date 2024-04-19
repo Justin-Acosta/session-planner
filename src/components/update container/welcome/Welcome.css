@@ -1,0 +1,131 @@
+.container__welcome {
+    position: relative;
+    /* Ensure positioning context for pseudo-element */
+    display: flex;
+    flex: 1;
+    width: 100%;
+    background-image: url('src/images/whatisdnd_tabletopwanderers_03.webp');
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    /* Ensure the pseudo-element doesn't overflow */
+
+    /* Create the gradient overlay */
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw; /* Cover the width of the viewport */
+        height: 60vh; /* Cover 60% of the viewport */
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 1),rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
+        pointer-events: none;
+        /* Allow interaction with underlying elements */
+    }
+
+    .container__left {
+        display: flex;
+        justify-content: center;
+        flex-basis: 50%;
+        height: 60vh;
+        margin-right: .5rem;
+        padding: 1rem;
+        padding-right: 0;
+        position: relative;
+        /* Ensure stacking context for z-index */
+        z-index: 1;
+        /* Ensure the text is above the gradient overlay */
+
+        h2 {
+            text-align: center;
+        }
+
+        .container__welcome-message {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0),rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+
+            button {
+                font-family: "Vollkorn", serif;
+                font-size: 1.4rem;
+                background-image: url('src/images/360_F_571117331_DVNWLMbxxB8sql1IhuHV3hHqxqKKv2Xx.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                max-width: 506px;
+                text-align: center;
+                background-color: rgb(58, 58, 58);
+                margin: .5rem 1rem;
+                padding: .6rem 1rem;
+                border-radius: .3rem;
+                border-style: none;
+                color:rgb(255, 255, 255);
+                text-decoration: none;
+                white-space: nowrap;
+                transition: transform 0.3s ease; /* Adding transition for smoother effect */
+            }
+            
+            button:hover {
+                transform: scale(1.03); /* Slightly larger size on hover */
+            }
+        }
+    }
+
+    .container__right {
+        display: flex;
+        flex-basis: 50%;
+        margin-left: .5rem;
+        padding: 1rem;
+        padding-left: 0;
+        position: relative;
+        /* Ensure stacking context for z-index */
+        z-index: 1;
+        /* Ensure the text is above the gradient overlay */
+
+        .container__list-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            justify-content: flex-start;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0),rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+
+            button {
+                font-family: "Vollkorn", serif;
+                font-size: 1.4rem;
+                background-image: url('src/images/360_F_571117331_DVNWLMbxxB8sql1IhuHV3hHqxqKKv2Xx.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                max-width: 506px;
+                flex: 1;
+                text-align: center;
+                background-color: rgb(58, 58, 58);
+                margin: .5rem 1rem;
+                padding: .6rem 1rem;
+                border-radius: .3rem;
+                border-style: none;
+                color:rgb(255, 255, 255);
+                text-decoration: none;
+                white-space: nowrap;
+                transition: transform 0.3s ease; /* Adding transition for smoother effect */
+            }
+            
+            button:hover {
+                transform: scale(1.03); /* Slightly larger size on hover */
+            }
+    
+            .container__campaign-list {
+                width: 100%;
+    
+                h2 {
+                    text-align: center;
+                }
+            }
+        }
+
+    }
+}

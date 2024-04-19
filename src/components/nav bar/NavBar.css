@@ -1,0 +1,68 @@
+
+
+.container__navbar {
+    background-image: url('../../images/2548bf6970f74d0d9594e17b72bc2037.gif');
+    background-size: 60%;
+    background-position: 68% 10%;
+    background-repeat: no-repeat;
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem;
+    margin-top: 0;
+}
+
+.container__navbar-header {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin:1rem;
+}
+
+.container__navbar-header--title {
+    font-size: 6rem;
+    font-family: "Jacquard 24", system-ui;
+    text-decoration: none;
+    color: white
+}
+
+.container__navbar-header--img {
+    height: 3rem;
+}
+
+.container__navbar-buttons {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.button__navbar {
+    font-family: "Vollkorn", serif;
+    font-size: 1.4rem;
+    background-image: url('../../images/360_F_571117331_DVNWLMbxxB8sql1IhuHV3hHqxqKKv2Xx.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 506px;
+    flex: 1;
+    text-align: center;
+    background-color: rgb(58, 58, 58);
+    margin: 0 1rem;
+    padding: .6rem 1rem;
+    border-radius: .3rem;
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.3s ease; /* Adding transition for smoother effect */
+}
+
+.button__navbar:hover {
+    transform: scale(1.03); /* Slightly larger size on hover */
+}
+
+
+
+
+
+
+
+
