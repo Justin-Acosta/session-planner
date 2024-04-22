@@ -21,9 +21,10 @@
 
 .container__navbar-header--title {
     font-size: 6rem;
-    font-family: "Jacquard 24", system-ui;
+    font-family: "germanica", system-ui;
     text-decoration: none;
-    color: white
+    color: rgb(243, 241, 237);
+    margin-bottom: .3rem;
 }
 
 .container__navbar-header--img {
@@ -46,10 +47,10 @@
     flex: 1;
     text-align: center;
     background-color: rgb(58, 58, 58);
-    margin: 0 1rem;
+    margin: 0 1.5%;
     padding: .6rem 1rem;
     border-radius: .3rem;
-    color:rgb(255, 255, 255);
+    color:rgb(243, 241, 237);
     text-decoration: none;
     white-space: nowrap;
     transition: transform 0.3s ease; /* Adding transition for smoother effect */

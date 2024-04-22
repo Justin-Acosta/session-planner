@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Jacquard+24&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap');
 
+@font-face {
+  font-family: "chomsky";
+  src: url("./fonts/chomsky/Chomsky.woff") format('woff');
+}
+
+@font-face {
+  font-family: "germanica";
+  src: url("./fonts/cloister-black/CloisterBlack.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "last-rites";
+  src: url("./fonts/last-rites/LastRites.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "black-chancery";
+  src: url("./fonts/black-chancery/BLKCHCRY.TTF") format('truetype');
+}
+
 
 html {
   display: flex;

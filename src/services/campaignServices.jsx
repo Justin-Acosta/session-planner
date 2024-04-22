@@ -9,3 +9,13 @@ export const readCompletedCampaignsByUser = (userId) => {
 export const readCampaignById = (campaignId) => {
     return fetch(`http://localhost:8088/campaigns/${campaignId}`).then((res) => res.json())
 } 
+
+export const createCampaign = (campaignObject) => {
+    return fetch(`http://localhost:8088/campaigns`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(campaignObject),
+    }).then((res) => res.json())
+} 
