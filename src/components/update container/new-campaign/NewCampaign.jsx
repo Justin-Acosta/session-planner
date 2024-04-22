@@ -6,13 +6,15 @@ import { useNavigate } from 'react-router-dom'
 export const NewCampaign = ({ currentUser }) => {
     const navigate = useNavigate();
 
-    const [campaignObject, setCampaignObject] = useState({
-        userId: 0,
-        isActive: true,
-        name: '',
-        setting: '',
-        image: ''
-    });
+    const [campaignObject, setCampaignObject] = useState(
+        {
+            userId: 0,
+            isActive: true,
+            name: '',
+            setting: '',
+            image: ''
+        }
+    );
 
     useEffect(() => {
         setCampaignObject({ ...campaignObject, userId: currentUser.id });
