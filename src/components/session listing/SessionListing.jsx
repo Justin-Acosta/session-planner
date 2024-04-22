@@ -1,18 +1,16 @@
-import { useEffect, useState } from 'react'
-import './CampaignListing.css'
-import { readCampaignById } from '../../services/campaignServices.jsx'
+
+
+import './SessionListing.css'
+
 import { Link } from 'react-router-dom'
 
-export const SessionListing = ({ currentUser, sessionId }) => {
+
+export const SessionListing = ({sessionId}) => {
     //---Use Params---
 
     //---Use States---
 
-
-
     //---Use Effects---
-
-
 
     //---Functions---
 
@@ -20,16 +18,12 @@ export const SessionListing = ({ currentUser, sessionId }) => {
 
     return (
         <Link
-            to={`/campaign/${currentCampaign.id}`}
-            className='container__campaign-listing'
+            to={`/session/1`}
+            className='container__session-listing'
         >
 
-            <div className='card__campaign-listing' style={{ backgroundImage: `url(${currentCampaign.image})` }}>
-                <div className='background-gradient'>
-
-                    <div className='title'>{currentCampaign.name}</div>
-                    <div className='text'>Setting: {currentCampaign.setting}</div>
-                </div>
+            <div className='card__session-listing'>
+                    <div className='title'>Session {sessionId}</div>
             </div>
 
         </Link>

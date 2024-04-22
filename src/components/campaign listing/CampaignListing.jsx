@@ -31,15 +31,15 @@ export const CampaignListing = ({ currentUser, campaignId }) => {
 
     return (
         <Link
-            to={`/session/1`}
+            to={`/campaign/${currentCampaign.id}`}
             className='container__campaign-listing'
         >
 
-            <div className='card__campaign-listing' >
+            <div className='card__campaign-listing' style={{ backgroundImage: `url(${currentCampaign.image})` }}>
                 <div className='background-gradient'>
 
-                    <div className='title'>session 1</div>
-                    <div className='text'>encounter</div>
+                    <div className='title'>{currentCampaign.name}</div>
+                    <div className='text'>Setting: {currentCampaign.setting}</div>
                 </div>
             </div>
 

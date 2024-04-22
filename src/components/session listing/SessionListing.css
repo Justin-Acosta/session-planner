@@ -1,54 +1,37 @@
-.container__campaign-listing {
+.container__session-listing {
     display: flex;
-
+    width: 50%;
     margin: 0 10%;
     text-decoration: none;
-    text-align: left;
 
-    .card__campaign-listing {
+    .card__session-listing {
         display: flex;
-        background-image: url("https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/08/Hadar-DnD.jpg");
-        background-position: right;
-        background-repeat: no-repeat;
-        background-size: 40% 100%;
+        justify-content: center;
+        background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,.5),rgba(0,0,0,1),rgba(0,0,0,.5),rgba(0,0,0,0));
         width: 100%;
+        /* margin: 0 15%; */
         margin-bottom: 1rem;
-        border-radius: .5rem;
-        box-shadow: 0px 0px 5px -2px hsla(0, 0%, 0%, 0.3),
-        0px 0px 5px -2px hsla(0, 0%, 0%, 0.3);
+        padding: .3rem 0;
         overflow: hidden;
-        transition: transform 0.3s; /* Add transition for smooth effect */
+        transition: transform 0.3s;
+        /* Add transition for smooth effect */
 
         /* Add linear gradient */
-        .background-gradient {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 100%;
-            background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
-            
-            .title {
-                margin: 0 1rem;
-                padding: .5rem 0;
-                color: rgb(243, 241, 237);
-                font-size: 1.454rem;
-                font-family: serif;
-            }
-    
-            .text {
-                margin: 0 1rem;
-                padding-bottom: 1rem;
-                font-size: .9rem;
-                color: rgb(243, 241, 237);
-                position: relative;
-                font-family: serif;
-            }
+
+        .title {
+            margin: 0 1rem;
+            padding: .5rem 0;
+            color: rgb(243, 241, 237);
+            font-size: 1.454rem;
+            font-family: serif;
         }
 
-
-        /* Add hover effect */
         &:hover {
-            transform: scale(1.03); /* Adjust the scale factor as needed */
+            transform: scale(1.08);
+            /* Adjust the scale factor as needed */
         }
     }
+
+
+    /* Add hover effect */
 }
