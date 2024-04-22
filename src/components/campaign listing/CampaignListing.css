@@ -1,0 +1,50 @@
+.container__campaign-listing {
+    display: flex;
+
+    margin: 0 4rem;
+    text-decoration: none;
+    text-align: left;
+
+    .card__campaign-listing {
+        display: flex;
+        background-image: url("https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/08/Hadar-DnD.jpg");
+        background-position: right;
+        background-repeat: no-repeat;
+        background-size: 40% 100%;
+        width: 100%;
+        margin-bottom: 1rem;
+        border-radius: .5rem;
+        overflow: hidden;
+        transition: transform 0.3s; /* Add transition for smooth effect */
+
+        /* Add linear gradient */
+        .background-gradient {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+        }
+
+        .title {
+            margin: 0 1rem;
+            padding: .5rem 0;
+            color: rgb(255, 255, 255);
+            font-size: 1.5rem;
+        }
+
+        .text {
+            margin: 0 1rem;
+            padding-top: ;
+            padding-bottom: 1rem;
+            font-size: .95rem;
+            color: white;
+            position: relative;
+        }
+
+        /* Add hover effect */
+        &:hover {
+            transform: scale(1.03); /* Adjust the scale factor as needed */
+        }
+    }
+}

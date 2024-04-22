@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, Outlet } from 'react-router-dom'
 import { NavBar } from "../components/nav bar/NavBar.jsx"
-import { readUserById } from "../services/userService.jsx"
 import { Welcome } from "../components/update container/welcome/Welcome.jsx"
 import { NewCampaign } from "../components/update container/new-campaign/NewCampaign.jsx"
 import { Campaign } from "../components/update container/campaign/Campaign.jsx"
 import { Session } from "../components/update container/session/Session.jsx"
 import { EditEncounter } from "../components/update container/edit encounter/EditEncounter.jsx"
 import { CreateEncounter } from "../components/update container/create encounter/CreateEncounter.jsx"
+import { readUserById } from "../services/userServices.jsx"
 
 
 
@@ -15,7 +15,13 @@ export const ApplicationViews = () => {
 
     //---Use States---
 
-    const [currentUser,setCurrentUser] = useState()
+    const [currentUser,setCurrentUser] = useState(
+        {
+            id: 0,
+            name: '',
+            email: ''
+        }
+    )
 
     //---Use Effects---
 

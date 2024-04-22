@@ -12,7 +12,7 @@ export const NewCampaign = ({currentUser}) => {
     //---HTML---
 
     return (
-        <div className='container__update'>
+        <div className='container__new-campaign'>
 
             <form className='form__new-campaign'>
                 <h1>Create Your New Campaign</h1>
