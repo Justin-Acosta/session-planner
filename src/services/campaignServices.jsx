@@ -24,3 +24,12 @@ export const createCampaign = (campaignObject) => {
     }).then((res) => res.json())
 } 
 
+export const updateCampaign = (campaignObject) => {
+    return fetch(`http://localhost:8088/campaigns/${campaignObject.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(campaignObject),
+    }).then((res) => res.json())
+}

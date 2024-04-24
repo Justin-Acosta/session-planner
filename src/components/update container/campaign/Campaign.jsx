@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'react'
 import './Campaign.css'
 import { useParams } from 'react-router-dom'
-import { readCampaignWithSessionsById } from '../../../services/campaignServices.jsx'
+import { readCampaignWithSessionsById, updateCampaign } from '../../../services/campaignServices.jsx'
 import { SessionListing } from '../../session listing/SessionListing.jsx'
+import { createSession } from '../../../services/sessionServices.jsx'
 
 export const Campaign = ({ currentUser }) => {
     //---Use Params---
@@ -14,6 +15,7 @@ export const Campaign = ({ currentUser }) => {
 
     const [currentCampaign, setCurrentCampaign] = useState(
         {
+            id: 0,
             userId: 0,
             isActive: true,
             name: '',
@@ -31,15 +33,41 @@ export const Campaign = ({ currentUser }) => {
 
     //---Functions---
 
+    const newSession = () => {
+        const sessionNumbers = currentCampaign.sessions.map((session) => session.sessionNumber)
+
+        const sessionObject = {
+            campaignId: currentCampaign.id,
+            sessionNumber: currentCampaign.sessions.length > 0 ? Math.max(...sessionNumbers) + 1 : 1
+        }
+
+        createSession(sessionObject).then(() => readCampaignWithSessionsById(campaignId).then((res) => setCurrentCampaign(res)))
+    }
+
+
+    const toggleActive = () => {
+
+        const campaignObject = {
+            id: currentCampaign.id,
+            userId: currentCampaign.userId,
+            isActive: !currentCampaign.isActive,
+            name: currentCampaign.name,
+            setting: currentCampaign.setting,
+            image: currentCampaign.image
+        }
+
+        updateCampaign(campaignObject).then(() => readCampaignWithSessionsById(campaignId).then((res) => setCurrentCampaign(res)))
+    }
+
     //---HTML---
 
     return (
         <div className='container__campaign' style={{ backgroundImage: `url(${currentCampaign.image})` }}>
 
 
-            <h2>{currentCampaign.name}</h2>
 
             <div className='card__campaign'>
+            <h2>{currentCampaign.name}</h2>
 
                 {currentCampaign.sessions.map((session) => (
                     
@@ -47,8 +75,8 @@ export const Campaign = ({ currentUser }) => {
                 ))}
 
                 <span>
-                    <button className='button'>New Session</button>
-                    <button className='button'>Complete Campaign</button>
+                    {currentCampaign.isActive ? <button className='button' onClick={newSession}>New Session</button>: ''}
+                    {currentCampaign.isActive ? <button className='button' onClick={toggleActive}>Complete Campaign</button>: <button className='button' onClick={toggleActive}>Switch to Active</button>}
                 </span>
             </div>
 
