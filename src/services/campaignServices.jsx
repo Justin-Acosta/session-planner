@@ -10,6 +10,10 @@ export const readCampaignById = (campaignId) => {
     return fetch(`http://localhost:8088/campaigns/${campaignId}`).then((res) => res.json())
 } 
 
+export const readCampaignWithSessionsById = (campaignId) => {
+    return fetch(`http://localhost:8088/campaigns/${campaignId}?_embed=sessions`).then((res) => res.json())
+}
+
 export const createCampaign = (campaignObject) => {
     return fetch(`http://localhost:8088/campaigns`, {
         method: "POST",
@@ -19,3 +23,13 @@ export const createCampaign = (campaignObject) => {
         body: JSON.stringify(campaignObject),
     }).then((res) => res.json())
 } 
+
+export const updateCampaign = (campaignObject) => {
+    return fetch(`http://localhost:8088/campaigns/${campaignObject.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(campaignObject),
+    }).then((res) => res.json())
+}

@@ -1,0 +1,37 @@
+.container__session-listing {
+    display: flex;
+    width: 50%;
+    margin: 0 10%;
+    text-decoration: none;
+
+    .card__session-listing {
+        display: flex;
+        justify-content: center;
+        background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,.5),rgba(0,0,0,1),rgba(0,0,0,.5),rgba(0,0,0,0));
+        width: 100%;
+        /* margin: 0 15%; */
+        margin: .25rem 0;
+        padding: .2rem 0;
+        overflow: hidden;
+        transition: transform 0.3s;
+        /* Add transition for smooth effect */
+
+        /* Add linear gradient */
+
+        .title {
+            margin: 0 1rem;
+            padding: .5rem 0;
+            color: rgb(243, 241, 237);
+            font-size: 1.2rem;
+            font-family: serif;
+        }
+
+        &:hover {
+            transform: scale(1.08);
+            /* Adjust the scale factor as needed */
+        }
+    }
+
+
+    /* Add hover effect */
+}

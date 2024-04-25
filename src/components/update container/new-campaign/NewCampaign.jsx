@@ -6,17 +6,25 @@ import { useNavigate } from 'react-router-dom'
 export const NewCampaign = ({ currentUser }) => {
     const navigate = useNavigate();
 
-    const [campaignObject, setCampaignObject] = useState({
-        userId: 0,
-        isActive: true,
-        name: '',
-        setting: '',
-        image: ''
-    });
+    //---useState---
+
+    const [campaignObject, setCampaignObject] = useState(
+        {
+            userId: 0,
+            isActive: true,
+            name: '',
+            setting: '',
+            image: ''
+        }
+    );
+
+    //---useEffects---
 
     useEffect(() => {
         setCampaignObject({ ...campaignObject, userId: currentUser.id });
     }, [currentUser]);
+
+    //---Functions---
 
     const submitNewCampaign = async (event) => {
         event.preventDefault();
@@ -32,7 +40,7 @@ export const NewCampaign = ({ currentUser }) => {
         } else {
             event.target.reportValidity(); // Display native browser validation message
         }
-    };
+    }
 
     return (
         <div className='container__new-campaign'>
