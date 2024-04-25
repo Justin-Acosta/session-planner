@@ -75,6 +75,7 @@
         
         .button:hover {
             transform: scale(1.03); /* Slightly larger size on hover */
+            
         }
 
     }
