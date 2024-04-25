@@ -37,8 +37,8 @@ export const Session = ({ currentUser }) => {
     //          ***---FIGURE OUT HOW THIS WORKS---***
     const deleteLast = () => {
 
-        const foundObject = currentSession.encounters.reduce((maxObj, obj) => {
-            return obj.position > maxObj.position ? obj : maxObj;});
+        const foundObject = currentSession.encounters.reduce((highestPossitionObject, encounter) => {
+            return encounter.position > highestPossitionObject.position ? encounter : highestPossitionObject;});
 
         deleteEncounter(foundObject.id).then(() => readSessionWithEncountersById(sessionId).then((res) => setCurrentSession(res)))
     }
