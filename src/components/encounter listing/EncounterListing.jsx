@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import './EncounterListing.css'
-import { readEncounterWithTypeById } from '../../services/encounterServices.jsx'
-import { Link } from 'react-router-dom'
-
-export const EncounterListing = ({ encounterId }) => {
+import { readEncounterWithTypeById, updateEncounter } from '../../services/encounterServices.jsx'
+import { readSessionWithEncountersById } from '../../services/sessionServices.jsx'
+export const EncounterListing = ({ encounterId, setCurrentSession }) => {
     //---Use Params---
 
     //---Use States---
@@ -28,19 +27,36 @@ export const EncounterListing = ({ encounterId }) => {
 
     //---Functions---
 
+    const switchToForm = () => {
+        const currentEncounterTemp = 
+        { 
+            id: currentEncounter.id,
+            sessionId: currentEncounter.sessionId,
+            encounterTypeId: currentEncounter.encounterTypeId,
+            isForm: true,
+            position: currentEncounter.position,
+            objective: currentEncounter.objective,
+            enemies: currentEncounter.enemies,
+            environment: currentEncounter.environment,
+            tactics: currentEncounter.tactics
+        }
+
+        updateEncounter(currentEncounterTemp).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)))
+    }
+
     //---HTML---
 
     return (
-        <div className='container__encounter-listing' style={{ backgroundImage: `url(${currentEncounter.encounterType.image})` }}>
+        <div className='container__encounter-listing' style={{ backgroundImage: `url(${currentEncounter.encounterType.image})`}}>
 
             <div className='card__encounter-listing'>
                 <div className='background-gradient'>
 
                     <div className='header'>
                         <div className='type'>{currentEncounter.encounterType.name}</div>
-                        <Link to={`/edit-encounter/${currentEncounter.id}`} className='button'>
+                        <button onClick={switchToForm} className='button'>
                             <div >Edit</div>
-                        </Link>
+                        </button>
                     </div>
 
                     <div className='container__text'>
