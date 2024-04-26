@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react'
 import './EditEncounter.css'
 import { readEncounterTypes } from '../../../services/encounterTypeService.jsx'
-import { useNavigate } from 'react-router-dom'
 import { readEncounterById, updateEncounter } from '../../../services/encounterServices.jsx'
 import { readSessionWithEncountersById } from '../../../services/sessionServices.jsx'
 
 export const EditEncounter = ({ encounterId,setCurrentSession }) => {
-    const navigate = useNavigate()
     //---Use Params---
-
-
 
     //---Use States---
 
@@ -67,7 +63,9 @@ export const EditEncounter = ({ encounterId,setCurrentSession }) => {
             tactics: encounterObject.tactics
         }
 
-        updateEncounter(encounterObjectTemp).then(() => readSessionWithEncountersById(encounterObject.sessionId).then((res) => setCurrentSession(res)))
+        updateEncounter(encounterObjectTemp).then(
+            () => readSessionWithEncountersById(encounterObject.sessionId).then(
+                (res) => setCurrentSession(res)))
 
     }
 
