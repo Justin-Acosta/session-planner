@@ -28,37 +28,54 @@ export const EncounterListing = ({ encounterId, setCurrentSession }) => {
     //---Functions---
 
     const switchToForm = () => {
-        const currentEncounterTemp = 
-        { 
-            id: currentEncounter.id,
-            sessionId: currentEncounter.sessionId,
-            encounterTypeId: currentEncounter.encounterTypeId,
-            isForm: true,
-            position: currentEncounter.position,
-            objective: currentEncounter.objective,
-            enemies: currentEncounter.enemies,
-            environment: currentEncounter.environment,
-            tactics: currentEncounter.tactics
+        let currentEncounterTemp =
+        {
+            ...currentEncounter,
+            isForm: !currentEncounter.isForm
         }
+
+        delete currentEncounterTemp.encounterType
 
         updateEncounter(currentEncounterTemp).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)))
     }
 
+    const switchExpand = () => {
+        const updatedEncounter = {
+            ...currentEncounter,
+            isExpanded: !currentEncounter.isExpanded
+        };
+    
+        setCurrentEncounter(updatedEncounter);
+    
+        updateEncounter(updatedEncounter).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)));
+    };
+
     //---HTML---
 
     return (
-        <div className='container__encounter-listing' style={{ backgroundImage: `url(${currentEncounter.encounterType.image})`}}>
+        <div className='container__encounter-listing' style={{ backgroundImage: `url(${currentEncounter.encounterType.image})` }}>
 
             <div className='card__encounter-listing'>
                 <div className='background-gradient'>
 
                     <div className='header'>
                         <div className='type'>{currentEncounter.encounterType.name}</div>
+
+                        {currentEncounter.isExpanded ?
+                            <button className='button-expand' onClick={switchExpand}>
+                                <div >⮝</div>
+                            </button> :
+                            <button className='button-expand' onClick={switchExpand}>
+                                <div >⮟</div>
+                            </button>}
+
                         <button onClick={switchToForm} className='button'>
                             <div >Edit</div>
                         </button>
                     </div>
 
+                    {currentEncounter.isExpanded ?                     
+                    <>
                     <div className='container__text'>
                         <div className='title'>Objective:</div>
                         <div className='encounter-info objective'> {currentEncounter.objective}</div>
@@ -78,6 +95,10 @@ export const EncounterListing = ({ encounterId, setCurrentSession }) => {
                         <div className='title'>Tactics:</div>
                         <div className='encounter-info tactics'>{currentEncounter.tactics}</div>
                     </div>
+                    </>:
+                     ''}
+
+
 
                 </div>
             </div>

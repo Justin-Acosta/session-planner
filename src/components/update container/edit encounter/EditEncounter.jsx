@@ -50,23 +50,15 @@ export const EditEncounter = ({ encounterId,setCurrentSession }) => {
     //---Functions---
 
     const switchToForm = () => {
-
-        const encounterObjectTemp = { 
-            id: encounterObject.id,
-            sessionId: encounterObject.sessionId,
-            encounterTypeId: encounterObject.encounterTypeId,
-            isForm: false,
-            position: encounterObject.position,
-            objective: encounterObject.objective,
-            enemies: encounterObject.enemies,
-            environment: encounterObject.environment,
-            tactics: encounterObject.tactics
+        let encounterObjectTemp =
+        {
+            ...encounterObject,
+            isForm: !encounterObject.isForm
         }
 
-        updateEncounter(encounterObjectTemp).then(
-            () => readSessionWithEncountersById(encounterObject.sessionId).then(
-                (res) => setCurrentSession(res)))
+        delete encounterObjectTemp.encounterType
 
+        updateEncounter(encounterObjectTemp).then(() => readSessionWithEncountersById(encounterObject.sessionId).then((res) => setCurrentSession(res)))
     }
 
     //---HTML---
