@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './EncounterListing.css'
 import { readEncounterWithTypeById, updateEncounter } from '../../services/encounterServices.jsx'
 import { readSessionWithEncountersById } from '../../services/sessionServices.jsx'
-export const EncounterListing = ({ encounterId, setCurrentSession }) => {
+export const EncounterListing = ({ encounterId, currentSession, setCurrentSession }) => {
     //---Use Params---
 
     //---Use States---
@@ -23,7 +23,7 @@ export const EncounterListing = ({ encounterId, setCurrentSession }) => {
 
     useEffect(() => {
         readEncounterWithTypeById(encounterId).then((res) => setCurrentEncounter(res))
-    }, [])
+    }, [currentSession])
 
     //---Functions---
 
@@ -39,13 +39,13 @@ export const EncounterListing = ({ encounterId, setCurrentSession }) => {
         updateEncounter(currentEncounterTemp).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)))
     }
 
-    const switchExpand = () => {
+    const switchExpand = async () => {
         const updatedEncounter = {
             ...currentEncounter,
             isExpanded: !currentEncounter.isExpanded
-        };
-    
-        setCurrentEncounter(updatedEncounter);
+        }
+
+        delete updatedEncounter.encounterType
     
         updateEncounter(updatedEncounter).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)));
     };

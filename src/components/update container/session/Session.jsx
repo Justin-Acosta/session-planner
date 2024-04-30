@@ -6,7 +6,7 @@ import { readSessionWithEncountersById } from '../../../services/sessionServices
 import { EncounterListing } from '../../encounter listing/EncounterListing.jsx'
 import { deleteEncounter } from '../../../services/encounterServices.jsx'
 import { readCampaignById } from '../../../services/campaignServices.jsx'
-import { EditEncounter } from '../edit encounter/EditEncounter.jsx'
+import { EditEncounter } from '../../edit encounter/EditEncounter.jsx'
 
 export const Session = ({ currentUser }) => {
 
@@ -77,7 +77,7 @@ export const Session = ({ currentUser }) => {
                     if (encounter.isForm) {
                         return(<EditEncounter key={encounter.id} encounterId={encounter.id} setCurrentSession={setCurrentSession}/>)
                     } else {
-                        return (<EncounterListing key={encounter.id} encounterId={encounter.id} setCurrentSession={setCurrentSession}/>)
+                        return (<EncounterListing key={encounter.id} encounterId={encounter.id} currentSession={currentSession} setCurrentSession={setCurrentSession}/>)
                     }
                 }
                 )}

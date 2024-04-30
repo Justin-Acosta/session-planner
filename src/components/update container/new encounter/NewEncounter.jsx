@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import './CreateEncounter.css'
+import './NewEncounter.css'
 import { readEncounterTypes } from '../../../services/encounterTypeService.jsx'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createEncounter, readEncountersBySessionId } from '../../../services/encounterServices.jsx'
 
-export const CreateEncounter = () => {
+export const NewEncounter = () => {
     const navigate = useNavigate()
     //---Use Params---
 
@@ -60,6 +60,8 @@ export const CreateEncounter = () => {
             const encounterObjectTemp = { 
                 sessionId: parseInt(sessionId),
                 encounterTypeId: encounterObject.encounterTypeId,
+                isForm: false,
+                isExpanded: true,
                 position: sessionEncounters.length > 0 ? Math.max(...encounterPositions) + 1 : 1,
                 objective: encounterObject.objective,
                 enemies: encounterObject.enemies,

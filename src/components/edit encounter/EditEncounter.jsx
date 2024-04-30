@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import './EditEncounter.css'
-import { readEncounterTypes } from '../../../services/encounterTypeService.jsx'
-import { readEncounterById, updateEncounter } from '../../../services/encounterServices.jsx'
-import { readSessionWithEncountersById } from '../../../services/sessionServices.jsx'
+import { readEncounterTypes } from '../../services/encounterTypeService.jsx'
+import { readEncounterById, updateEncounter } from '../../services/encounterServices.jsx'
+import { readSessionWithEncountersById } from '../../services/sessionServices.jsx'
 
-export const EditEncounter = ({ encounterId,setCurrentSession }) => {
+export const EditEncounter = ({ encounterId, setCurrentSession }) => {
     //---Use Params---
 
     //---Use States---
 
     const [encounterTypes, setEncounterTypes] = useState([])
     const [currentType, setCurrentType] = useState('')
-    const [encounterObject, setEncounterObject] = useState(
+    const [currentEncounter, setCurrentEncounter] = useState(
         {
             sessionId: 0,
             encounterTypeId: 0,
@@ -24,20 +24,19 @@ export const EditEncounter = ({ encounterId,setCurrentSession }) => {
         }
     )
 
-
     //---Use Effects---
 
     useEffect(() => {
-        readEncounterById(parseInt(encounterId)).then((res) => setEncounterObject(res))
+        readEncounterById(parseInt(encounterId)).then((res) => setCurrentEncounter(res))
     }, [])
 
     useEffect(() => {
         readEncounterTypes().then((res) => setEncounterTypes(res))
-    }, [encounterObject])
+    }, [currentEncounter])
 
     useEffect(() => {
-        if (encounterObject.encounterTypeId > 0) {
-            const currentType = encounterTypes.find((type) => encounterObject.encounterTypeId === type.id)
+        if (currentEncounter.encounterTypeId > 0) {
+            const currentType = encounterTypes.find((type) => currentEncounter.encounterTypeId === type.id)
 
             setCurrentType(currentType)
         } else {
@@ -45,20 +44,18 @@ export const EditEncounter = ({ encounterId,setCurrentSession }) => {
         }
     }, [encounterTypes])
 
-
-
     //---Functions---
 
     const switchToForm = () => {
-        let encounterObjectTemp =
+        let currentEncounterTemp =
         {
-            ...encounterObject,
-            isForm: !encounterObject.isForm
+            ...currentEncounter,
+            isForm: !currentEncounter.isForm
         }
 
-        delete encounterObjectTemp.encounterType
+        delete currentEncounterTemp.encounterType
 
-        updateEncounter(encounterObjectTemp).then(() => readSessionWithEncountersById(encounterObject.sessionId).then((res) => setCurrentSession(res)))
+        updateEncounter(currentEncounterTemp).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)))
     }
 
     //---HTML---
@@ -79,7 +76,7 @@ export const EditEncounter = ({ encounterId,setCurrentSession }) => {
                     <form className='form__edit-encounter' onSubmit={switchToForm}>
 
                         <fieldset>
-                            <select required value={encounterObject.encounterTypeId} onChange={(event) => setEncounterObject({ ...encounterObject, encounterTypeId: parseInt(event.target.value) })}>
+                            <select required value={currentEncounter.encounterTypeId} onChange={(event) => setCurrentEncounter({ ...currentEncounter, encounterTypeId: parseInt(event.target.value) })}>
                                 <option value="0"></option>
                                 {encounterTypes.map((type) => (
                                     <option key={type.id} value={type.id}>{type.name}</option>
@@ -88,42 +85,46 @@ export const EditEncounter = ({ encounterId,setCurrentSession }) => {
                         </fieldset>
 
                         <fieldset>
+                            <h3>Objective:</h3>
                             <textarea
                                 required
                                 className={'textarea'}
                                 type="text"
-                                value={encounterObject.objective}
-                                onChange={(event) => setEncounterObject({ ...encounterObject, objective: event.target.value })}
+                                value={currentEncounter.objective}
+                                onChange={(event) => setCurrentEncounter({ ...currentEncounter, objective: event.target.value })}
                             />
                         </fieldset>
 
                         <fieldset >
+                            <h3>Enemies:</h3>
                             <textarea
                                 required
                                 className={'textarea'}
                                 type="text"
-                                value={encounterObject.enemies}
-                                onChange={(event) => setEncounterObject({ ...encounterObject, enemies: event.target.value })}
+                                value={currentEncounter.enemies}
+                                onChange={(event) => setCurrentEncounter({ ...currentEncounter, enemies: event.target.value })}
                             />
                         </fieldset>
 
                         <fieldset>
+                            <h3>Environment:</h3>
                             <textarea
                                 required
                                 className={'textarea'}
                                 type="text"
-                                value={encounterObject.environment}
-                                onChange={(event) => setEncounterObject({ ...encounterObject, environment: event.target.value })}
+                                value={currentEncounter.environment}
+                                onChange={(event) => setCurrentEncounter({ ...currentEncounter, environment: event.target.value })}
                             />
                         </fieldset>
 
                         <fieldset>
+                            <h3>Tactics:</h3>
                             <textarea
                                 required
                                 className={'textarea'}
                                 type="text"
-                                value={encounterObject.tactics}
-                                onChange={(event) => setEncounterObject({ ...encounterObject, tactics: event.target.value })}
+                                value={currentEncounter.tactics}
+                                onChange={(event) => setCurrentEncounter({ ...currentEncounter, tactics: event.target.value })}
                             />
                         </fieldset>
 
