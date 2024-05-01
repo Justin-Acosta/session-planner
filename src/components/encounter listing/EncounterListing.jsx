@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './EncounterListing.css'
 import { readEncounterWithTypeById, updateEncounter } from '../../services/encounterServices.jsx'
 import { readSessionWithEncountersById } from '../../services/sessionServices.jsx'
-export const EncounterListing = ({ encounterId, currentSession, setCurrentSession }) => {
+export const EncounterListing = ({ encounterId, currentSession, setCurrentSession, sortedEncounters, setSortedEncounters }) => {
     //---Use Params---
 
     //---Use States---
@@ -46,10 +46,64 @@ export const EncounterListing = ({ encounterId, currentSession, setCurrentSessio
         }
 
         delete updatedEncounter.encounterType
-    
+
         updateEncounter(updatedEncounter).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)));
     };
 
+    const movePositionUp = () => {
+
+        // finds greatest position property value that is also let than current encounter position property value
+        const foundObject = sortedEncounters.reduce((closestEncounterLessThan, encounter) => {
+            if (currentEncounter.position > encounter.position) {
+                closestEncounterLessThan = encounter
+            }
+            return closestEncounterLessThan
+        })
+
+        if (foundObject.position !== currentEncounter.position) {
+
+            const tempPosition = foundObject.position
+
+            foundObject.position = currentEncounter.position
+
+            const currentEncounterTemp = {...currentEncounter, position: tempPosition}
+
+            delete currentEncounterTemp.encounterType
+
+            updateEncounter(foundObject).then(
+                updateEncounter(currentEncounterTemp)).then(
+                    () => readSessionWithEncountersById(currentEncounter.sessionId).then(
+                        (res) => setCurrentSession(res)))
+        }
+    }
+
+    const movePositionDown = () => {
+
+        // finds greatest position property value that is also let than current encounter position property value
+        const foundObject = sortedEncounters.reverse().reduce((closestEncounterLessThan, encounter) => {
+            if ( encounter.position  > currentEncounter.position ) {
+                closestEncounterLessThan = encounter
+            }
+            return closestEncounterLessThan
+        })
+
+        if (foundObject.position !== currentEncounter.position) {
+
+            const tempPosition = foundObject.position
+
+            foundObject.position = currentEncounter.position
+
+            const currentEncounterTemp = {...currentEncounter, position: tempPosition}
+
+            delete currentEncounterTemp.encounterType
+
+            updateEncounter(foundObject).then(
+                updateEncounter(currentEncounterTemp)).then(
+                    () => readSessionWithEncountersById(currentEncounter.sessionId).then(
+                        (res) => setCurrentSession(res)))
+        }
+    }
+    
     //---HTML---
 
     return (
@@ -72,31 +126,36 @@ export const EncounterListing = ({ encounterId, currentSession, setCurrentSessio
                         <button onClick={switchToForm} className='button'>
                             <div >Edit</div>
                         </button>
+
+                        <div className='container__position'>
+                            <button className='up' onClick={movePositionUp}>🠝</button>
+                            <button className='down' onClick={movePositionDown}>🠟</button>
+                        </div>
                     </div>
 
-                    {currentEncounter.isExpanded ?                     
-                    <>
-                    <div className='container__text'>
-                        <div className='title'>Objective:</div>
-                        <div className='encounter-info objective'> {currentEncounter.objective}</div>
-                    </div>
+                    {currentEncounter.isExpanded ?
+                        <>
+                            <div className='container__text'>
+                                <div className='title'>Objective:</div>
+                                <div className='encounter-info objective'> {currentEncounter.objective}</div>
+                            </div>
 
-                    <div className='container__text'>
-                        <div className='title'>Enemies:</div>
-                        <div className='encounter-info enemies'>{currentEncounter.enemies}</div>
-                    </div>
+                            <div className='container__text'>
+                                <div className='title'>Enemies:</div>
+                                <div className='encounter-info enemies'>{currentEncounter.enemies}</div>
+                            </div>
 
-                    <div className='container__text'>
-                        <div className='title'>Environment:</div>
-                        <div className='encounter-info environment'>{currentEncounter.environment}</div>
-                    </div>
+                            <div className='container__text'>
+                                <div className='title'>Environment:</div>
+                                <div className='encounter-info environment'>{currentEncounter.environment}</div>
+                            </div>
 
-                    <div className='container__text'>
-                        <div className='title'>Tactics:</div>
-                        <div className='encounter-info tactics'>{currentEncounter.tactics}</div>
-                    </div>
-                    </>:
-                     ''}
+                            <div className='container__text'>
+                                <div className='title'>Tactics:</div>
+                                <div className='encounter-info tactics'>{currentEncounter.tactics}</div>
+                            </div>
+                        </> :
+                        ''}
 
 
 

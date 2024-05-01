@@ -38,11 +38,18 @@ export const Session = ({ currentUser }) => {
         }
     )
 
+    const [sortedEncounters, setSortedEncounters] = useState([])
+
     //---Use Effects---
 
     useEffect(() => {
         readSessionWithEncountersById(sessionId).then((res) => setCurrentSession(res))
     }, [])
+
+    useEffect(() => {
+        const sortedEncountersByPosition = currentSession.encounters.sort((a, b) => a.position - b.position);
+        setSortedEncounters(sortedEncountersByPosition)
+    },[currentSession])
 
     useEffect(() => {
         if (currentSession.campaignId > 0) {
@@ -73,11 +80,11 @@ export const Session = ({ currentUser }) => {
             <div className='card__session'>
                 <h2>Session {currentSession.sessionNumber}</h2>
 
-                {currentSession.encounters.map((encounter) => {
+                {sortedEncounters.map((encounter) => {
                     if (encounter.isForm) {
                         return(<EditEncounter key={encounter.id} encounterId={encounter.id} setCurrentSession={setCurrentSession}/>)
                     } else {
-                        return (<EncounterListing key={encounter.id} encounterId={encounter.id} currentSession={currentSession} setCurrentSession={setCurrentSession}/>)
+                        return (<EncounterListing key={encounter.id} encounterId={encounter.id} sortedEncounters={sortedEncounters} setSortedEncounters={setSortedEncounters} currentSession={currentSession} setCurrentSession={setCurrentSession}/>)
                     }
                 }
                 )}
