@@ -5,8 +5,7 @@ import { Welcome } from "../components/update container/welcome/Welcome.jsx"
 import { NewCampaign } from "../components/update container/new campaign/NewCampaign.jsx"
 import { Campaign } from "../components/update container/campaign/Campaign.jsx"
 import { Session } from "../components/update container/session/Session.jsx"
-import { EditEncounter } from "../components/edit encounter/EditEncounter.jsx"
-import { NewEncounter } from "../components/update container/new encounter/NewEncounter.jsx"
+
 import { readUserById } from "../services/userServices.jsx"
 
 
@@ -60,16 +59,9 @@ export const ApplicationViews = () => {
                 </Route>
 
                 <Route path="session">
-                    <Route path=":sessionId" element={<Session currentUser={currentUser}/>}/>
+                    <Route path=":sessionId" element={<Session/>}/>
                 </Route>
-
-                <Route path="create-encounter">
-                    <Route path=":sessionId" element={<NewEncounter currentUser={currentUser}/>}/>
-                </Route>
-                
-                <Route path="edit-encounter">
-                    <Route path=":encounterId" element={<EditEncounter currentUser={currentUser}/>}/>
-                </Route>
+            
 
             </Route>
         </Routes>

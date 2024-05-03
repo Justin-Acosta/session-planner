@@ -4,13 +4,12 @@ import './Session.css'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { readSessionWithEncountersById } from '../../../services/sessionServices.jsx'
 import { EncounterListing } from '../../encounter listing/EncounterListing.jsx'
-import { deleteEncounter } from '../../../services/encounterServices.jsx'
+import { createEncounter, deleteEncounter } from '../../../services/encounterServices.jsx'
 import { readCampaignById } from '../../../services/campaignServices.jsx'
 import { EditEncounter } from '../../edit encounter/EditEncounter.jsx'
+import { generatePosition } from './SessionUtils.jsx'
 
-export const Session = ({ currentUser }) => {
-
-    const navigate = useNavigate()
+export const Session = () => {
 
     //---Use Params---
 
@@ -49,7 +48,7 @@ export const Session = ({ currentUser }) => {
     useEffect(() => {
         const sortedEncountersByPosition = currentSession.encounters.sort((a, b) => a.position - b.position);
         setSortedEncounters(sortedEncountersByPosition)
-    },[currentSession])
+    }, [currentSession])
 
     useEffect(() => {
         if (currentSession.campaignId > 0) {
@@ -59,16 +58,29 @@ export const Session = ({ currentUser }) => {
 
     //---Functions---
 
+    const newEncounter = async () => {
 
-    //          ***---FIGURE OUT HOW THIS WORKS---***
-    const deleteLast = () => {
+        const positionTemp = generatePosition(currentSession.encounters)
 
-        const foundObject = currentSession.encounters.reduce((highestPossitionObject, encounter) => {
-            return encounter.position > highestPossitionObject.position ? encounter : highestPossitionObject;
-        });
+        const newEncounterObject =
+        {
+            sessionId: currentSession.id,
+            encounterTypeId: 1,
+            isForm: true,
+            position: positionTemp,
+            objective: '',
+            enemies: '',
+            environment: '',
+            tactics: '',
+            isExpanded: true
+        }
 
-        deleteEncounter(foundObject.id).then(() => readSessionWithEncountersById(sessionId).then((res) => setCurrentSession(res)))
+        await createEncounter(newEncounterObject)
+
+        await readSessionWithEncountersById(sessionId).then(
+            (res) => setCurrentSession(res))
     }
+
 
     //---HTML---
 
@@ -82,19 +94,20 @@ export const Session = ({ currentUser }) => {
 
                 {sortedEncounters.map((encounter) => {
                     if (encounter.isForm) {
-                        return(<EditEncounter key={encounter.id} encounterId={encounter.id} setCurrentSession={setCurrentSession}/>)
+                        return (<EditEncounter key={encounter.id} encounterId={encounter.id} setCurrentSession={setCurrentSession} />)
                     } else {
-                        return (<EncounterListing key={encounter.id} encounterId={encounter.id} sortedEncounters={sortedEncounters} setSortedEncounters={setSortedEncounters} currentSession={currentSession} setCurrentSession={setCurrentSession}/>)
+                        return (<EncounterListing key={encounter.id} encounterId={encounter.id} sortedEncounters={sortedEncounters} currentSession={currentSession} setCurrentSession={setCurrentSession} />)
                     }
                 }
                 )}
 
 
                 <div className="container__buttons">
-                    <Link to={`/create-encounter/${currentSession.id}`} className='button'>
+                    {/* <Link to={`/create-encounter/${currentSession.id}`} className='button'>
                         <div >Create Encounter</div>
-                    </Link>
-                    <button className='button' onClick={deleteLast}>Delete Last</button>
+                    </Link> */}
+
+                    <button className='button' onClick={newEncounter}>Create Encounter</button>
                     <Link to={`/campaign/${currentSession.campaignId}`} className='button'>
                         <div >Back to Campaign</div>
                     </Link>

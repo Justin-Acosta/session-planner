@@ -4,7 +4,6 @@
     position: relative;
     /* Ensure positioning context for pseudo-element */
     display: flex;
-
     width: 100%;
     background-image: url('../../../images/whatisdnd_tabletopwanderers_03.webp');
     background-position: center;

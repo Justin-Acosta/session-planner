@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import './EncounterListing.css'
-import { readEncounterWithTypeById, updateEncounter } from '../../services/encounterServices.jsx'
+import { deleteEncounter, readEncounterWithTypeById, updateEncounter } from '../../services/encounterServices.jsx'
 import { readSessionWithEncountersById } from '../../services/sessionServices.jsx'
-export const EncounterListing = ({ encounterId, currentSession, setCurrentSession, sortedEncounters, setSortedEncounters }) => {
+import { findClosestEncounterGreaterThan, findClosestEncounterLessThanCurrent, switchPositionPropertyValues } from './EncounterListingUtils.js'
+export const EncounterListing = ({ encounterId, currentSession, setCurrentSession, sortedEncounters }) => {
     //---Use Params---
 
     //---Use States---
@@ -22,24 +23,25 @@ export const EncounterListing = ({ encounterId, currentSession, setCurrentSessio
     //---Use Effects---
 
     useEffect(() => {
-        readEncounterWithTypeById(encounterId).then((res) => setCurrentEncounter(res))
+            readEncounterWithTypeById(encounterId).then((res) => setCurrentEncounter(res))
     }, [currentSession])
 
     //---Functions---
 
+
     const switchToForm = () => {
-        let currentEncounterTemp =
-        {
-            ...currentEncounter,
-            isForm: !currentEncounter.isForm
-        }
+        
+        let currentEncounterTemp = { ...currentEncounter, isForm: !currentEncounter.isForm }
 
         delete currentEncounterTemp.encounterType
 
-        updateEncounter(currentEncounterTemp).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)))
+        updateEncounter(currentEncounterTemp).then(
+            () => readSessionWithEncountersById(currentEncounter.sessionId).then(
+                (res) => setCurrentSession(res)))
     }
 
-    const switchExpand = async () => {
+
+    const switchExpand = () => {
         const updatedEncounter = {
             ...currentEncounter,
             isExpanded: !currentEncounter.isExpanded
@@ -47,63 +49,53 @@ export const EncounterListing = ({ encounterId, currentSession, setCurrentSessio
 
         delete updatedEncounter.encounterType
 
-        updateEncounter(updatedEncounter).then(() => readSessionWithEncountersById(currentEncounter.sessionId).then((res) => setCurrentSession(res)));
+        updateEncounter(updatedEncounter).then(
+            () => readSessionWithEncountersById(currentEncounter.sessionId).then(
+                (res) => setCurrentSession(res)));
     };
+
 
     const movePositionUp = () => {
 
-        // finds greatest position property value that is also let than current encounter position property value
-        const foundObject = sortedEncounters.reduce((closestEncounterLessThan, encounter) => {
-            if (currentEncounter.position > encounter.position) {
-                closestEncounterLessThan = encounter
-            }
-            return closestEncounterLessThan
-        })
+        let foundObject = findClosestEncounterLessThanCurrent(sortedEncounters, currentEncounter)
 
-        if (foundObject.position !== currentEncounter.position) {
+        if (foundObject.position < currentEncounter.position) {
 
-            const tempPosition = foundObject.position
+            const switchedEncounters = switchPositionPropertyValues(foundObject, currentEncounter)
 
-            foundObject.position = currentEncounter.position
-
-            const currentEncounterTemp = {...currentEncounter, position: tempPosition}
-
-            delete currentEncounterTemp.encounterType
-
-            updateEncounter(foundObject).then(
-                updateEncounter(currentEncounterTemp)).then(
+            updateEncounter(switchedEncounters.foundObject).then(
+                updateEncounter(switchedEncounters.currentEncounter)).then(
                     () => readSessionWithEncountersById(currentEncounter.sessionId).then(
                         (res) => setCurrentSession(res)))
         }
     }
+
+
 
     const movePositionDown = () => {
 
-        // finds greatest position property value that is also let than current encounter position property value
-        const foundObject = sortedEncounters.reverse().reduce((closestEncounterLessThan, encounter) => {
-            if ( encounter.position  > currentEncounter.position ) {
-                closestEncounterLessThan = encounter
-            }
-            return closestEncounterLessThan
-        })
+        const foundObject = findClosestEncounterGreaterThan(sortedEncounters, currentEncounter)
 
-        if (foundObject.position !== currentEncounter.position) {
+        if (foundObject.position > currentEncounter.position) {
 
-            const tempPosition = foundObject.position
+            const switchedEncounters = switchPositionPropertyValues(foundObject, currentEncounter)
 
-            foundObject.position = currentEncounter.position
-
-            const currentEncounterTemp = {...currentEncounter, position: tempPosition}
-
-            delete currentEncounterTemp.encounterType
-
-            updateEncounter(foundObject).then(
-                updateEncounter(currentEncounterTemp)).then(
+            updateEncounter(switchedEncounters.foundObject).then(
+                updateEncounter(switchedEncounters.currentEncounter)).then(
                     () => readSessionWithEncountersById(currentEncounter.sessionId).then(
                         (res) => setCurrentSession(res)))
         }
     }
-    
+
+
+    const removeEncounter = async () => {
+        await deleteEncounter(currentEncounter.id)
+
+        await readSessionWithEncountersById(currentEncounter.sessionId).then(
+            (res) => setCurrentSession(res))
+    }
+
+
     //---HTML---
 
     return (
@@ -122,6 +114,10 @@ export const EncounterListing = ({ encounterId, currentSession, setCurrentSessio
                             <button className='button-expand' onClick={switchExpand}>
                                 <div >⮟</div>
                             </button>}
+
+                        <button className='button'>
+                            <div onClick={removeEncounter}>Remove</div>
+                        </button>
 
                         <button onClick={switchToForm} className='button'>
                             <div >Edit</div>
