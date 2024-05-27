@@ -23,14 +23,14 @@ export const EncounterListing = ({ encounterId, currentSession, setCurrentSessio
     //---Use Effects---
 
     useEffect(() => {
-            readEncounterWithTypeById(encounterId).then((res) => setCurrentEncounter(res))
+        readEncounterWithTypeById(encounterId).then((res) => setCurrentEncounter(res))
     }, [currentSession])
 
     //---Functions---
 
 
     const switchToForm = () => {
-        
+
         let currentEncounterTemp = { ...currentEncounter, isForm: !currentEncounter.isForm }
 
         delete currentEncounterTemp.encounterType
