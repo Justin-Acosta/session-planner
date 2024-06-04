@@ -9,14 +9,13 @@
         display: flex;
         background-position: right;
         background-repeat: no-repeat;
-        background-size: 10rem 100%;
+        background-size: 40% 100%;
         width: 100%;
         margin-bottom: 1rem;
         border-radius: .5rem;
         box-shadow: 0px 0px 5px -2px hsla(0, 0%, 0%, 0.3),
         0px 0px 5px -2px hsla(0, 0%, 0%, 0.3);
         overflow: hidden;
-        background-color: black;
         transition: transform 0.3s; /* Add transition for smooth effect */
 
         /* Add linear gradient */
@@ -25,10 +24,8 @@
             flex-direction: column;
             justify-content: space-between;
             width: 100%;
-            background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, .3), rgba(0, 0, 0, 1));
-            background-position: right;
-            background-size: 10.1rem 100%;
-
+            background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+            
             .title {
                 margin: 0 1rem;
                 padding: .5rem 0;

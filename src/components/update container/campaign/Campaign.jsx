@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 import { readCampaignWithSessionsById, updateCampaign } from '../../../services/campaignServices.jsx'
 import { SessionListing } from '../../session listing/SessionListing.jsx'
 import { createSession } from '../../../services/sessionServices.jsx'
-import { generateSessionNumber } from './CampaignUtils.jsx'
 
 export const Campaign = ({ currentUser }) => {
     //---Use Params---
@@ -29,17 +28,17 @@ export const Campaign = ({ currentUser }) => {
     //---Use Effects---
 
     useEffect(() => {
-        readCampaignWithSessionsById(campaignId).then(
-            (res) => setCurrentCampaign(res))
+        readCampaignWithSessionsById(campaignId).then((res) => setCurrentCampaign(res))
     }, [])
 
     //---Functions---
 
     const newSession = () => {
+        const sessionNumbers = currentCampaign.sessions.map((session) => session.sessionNumber)
 
         const sessionObject = {
             campaignId: currentCampaign.id,
-            sessionNumber: generateSessionNumber(currentCampaign.sessions)
+            sessionNumber: currentCampaign.sessions.length > 0 ? Math.max(...sessionNumbers) + 1 : 1
         }
 
         createSession(sessionObject).then(() => readCampaignWithSessionsById(campaignId).then((res) => setCurrentCampaign(res)))
@@ -48,17 +47,22 @@ export const Campaign = ({ currentUser }) => {
 
     const toggleActive = () => {
 
-        const currentCampaignTemp = {...currentCampaign, isActive: !currentCampaign.isActive}
+        const campaignObject = {
+            id: currentCampaign.id,
+            userId: currentCampaign.userId,
+            isActive: !currentCampaign.isActive,
+            name: currentCampaign.name,
+            setting: currentCampaign.setting,
+            image: currentCampaign.image
+        }
 
-        updateCampaign(currentCampaignTemp).then(
-            () => readCampaignWithSessionsById(campaignId).then(
-                (res) => setCurrentCampaign(res)))
+        updateCampaign(campaignObject).then(() => readCampaignWithSessionsById(campaignId).then((res) => setCurrentCampaign(res)))
     }
 
     //---HTML---
 
     return (
-        <div className='container__campaign' style={ { backgroundImage: `url(${currentCampaign.image})` } }>
+        <div className='container__campaign' style={{ backgroundImage: `url(${currentCampaign.image})` }}>
 
 
 

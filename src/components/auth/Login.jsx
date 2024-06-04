@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { getUserByEmail } from "../../services/userServices.jsx"
-import './Login.css'
+
 
 export const Login = () => {
   const [email, set] = useState("")
@@ -30,13 +30,10 @@ export const Login = () => {
 
   return (
     <main className="auth-container">
-
       <section>
-
-        <h2>Please sign in</h2>
         <form className="auth-form" onSubmit={handleLogin}>
-
-
+          <h1 className="header">Learning Moments</h1>
+          <h2>Please sign in</h2>
           <fieldset className="auth-fieldset">
             <div>
               <input
@@ -50,23 +47,18 @@ export const Login = () => {
               />
             </div>
           </fieldset>
-
           <fieldset className="auth-fieldset">
             <div>
-              <button type="submit" className="button">Sign in</button>
+              <button type="submit">Sign in</button>
             </div>
           </fieldset>
-
         </form>
-
       </section>
-
       <section className="register-link">
         <Link to="/register">
           <div>Not a member yet?</div>
         </Link>
       </section>
-
     </main>
   )
 }

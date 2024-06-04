@@ -4,12 +4,16 @@ import { createUser, getUserByEmail } from "../../services/userServices.jsx"
 
 export const Register = (props) => {
 
-  const [user, setUser] = useState({ name: "", email: ""})
+  const [user, setUser] = useState({ name: "", email: "", image: "", cohort: 0 })
   let navigate = useNavigate()
 
   const registerNewUser = () => {
+    const newUser = {
+      ...user,
+      cohort: parseInt(user.cohort),
+    }
 
-    createUser(user).then((createdUser) => {
+    createUser(newUser).then((createdUser) => {
       if (createdUser.hasOwnProperty("id")) {
         localStorage.setItem(
           "learning_user",
@@ -45,9 +49,9 @@ export const Register = (props) => {
 
   return (
     <main className="auth-container">
-        <h2>Please Register</h2>
       <form className="auth-form" onSubmit={handleRegister}>
-
+        <h1 className="header">Learning Moments</h1>
+        <h2>Please Register</h2>
         <fieldset className="auth-fieldset">
           <div>
             <input
@@ -61,7 +65,6 @@ export const Register = (props) => {
             />
           </div>
         </fieldset>
-
         <fieldset className="auth-fieldset">
           <div>
             <input
@@ -74,7 +77,18 @@ export const Register = (props) => {
             />
           </div>
         </fieldset>
-
+        <fieldset className="auth-fieldset">
+          <div>
+            <input
+              onChange={updateUser}
+              type="number"
+              id="cohort"
+              className="auth-form-input"
+              placeholder="Cohort #"
+              required
+            />
+          </div>
+        </fieldset>
         <fieldset className="auth-fieldset">
           <div>
             <button type="submit">Register</button>
