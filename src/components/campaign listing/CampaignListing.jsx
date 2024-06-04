@@ -3,7 +3,7 @@ import './CampaignListing.css'
 import { readCampaignById } from '../../services/campaignServices.jsx'
 import { Link } from 'react-router-dom'
 
-export const CampaignListing = ({ currentUser, campaignId }) => {
+export const CampaignListing = ({ campaignId }) => {
     //---Use Params---
 
     //---Use States---
@@ -21,9 +21,12 @@ export const CampaignListing = ({ currentUser, campaignId }) => {
 
     //---Use Effects---
 
+
     useEffect(() => {
-        readCampaignById(campaignId).then((res) => setCurrentCampaign(res))
+        readCampaignById(campaignId).then(
+            (res) => setCurrentCampaign(res))
     }, [])
+    
 
     //---Functions---
 

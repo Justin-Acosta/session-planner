@@ -1,7 +1,6 @@
 
 import './App.css'
 import { Routes, Route,} from 'react-router-dom'
-
 import { Authorized } from './views/Authorized.jsx'
 import { ApplicationViews } from './views/ApplicationViews.jsx'
 import { Register } from './components/auth/Register.jsx'

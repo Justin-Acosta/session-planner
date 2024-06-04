@@ -2,11 +2,10 @@ import { useEffect, useState } from "react"
 import { Routes, Route, Outlet } from 'react-router-dom'
 import { NavBar } from "../components/nav bar/NavBar.jsx"
 import { Welcome } from "../components/update container/welcome/Welcome.jsx"
-import { NewCampaign } from "../components/update container/new-campaign/NewCampaign.jsx"
+import { NewCampaign } from "../components/update container/new campaign/NewCampaign.jsx"
 import { Campaign } from "../components/update container/campaign/Campaign.jsx"
 import { Session } from "../components/update container/session/Session.jsx"
-import { EditEncounter } from "../components/update container/edit encounter/EditEncounter.jsx"
-import { CreateEncounter } from "../components/update container/create encounter/CreateEncounter.jsx"
+
 import { readUserById } from "../services/userServices.jsx"
 
 
@@ -60,16 +59,9 @@ export const ApplicationViews = () => {
                 </Route>
 
                 <Route path="session">
-                    <Route path=":sessionId" element={<Session currentUser={currentUser}/>}/>
+                    <Route path=":sessionId" element={<Session/>}/>
                 </Route>
-
-                <Route path="create-encounter">
-                    <Route path=":sessionId" element={<CreateEncounter currentUser={currentUser}/>}/>
-                </Route>
-                
-                <Route path="edit-encounter">
-                    <Route path=":encounterId" element={<EditEncounter currentUser={currentUser}/>}/>
-                </Route>
+            
 
             </Route>
         </Routes>
