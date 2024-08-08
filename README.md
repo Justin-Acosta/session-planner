@@ -43,7 +43,7 @@ D&D session planner to create campaigns, organize sessions, and plan out encount
 Navigate to the api repository for this project and follow the instructions in the readme: https://github.com/Justin-Acosta/session-api
 
 ### Prerequisites
-- Node.js 18 or later
+- Node.js version 18 or later
 - npm
 
 ### Installation
