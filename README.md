@@ -44,6 +44,7 @@ Navigate to the api repository for this project and follow the instructions in t
 
 ### Prerequisites
 - Node.js 18 or later
+- npm
 
 ### Installation
 1. Clone this repository from Github
