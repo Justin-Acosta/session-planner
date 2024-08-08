@@ -52,6 +52,7 @@ Navigate to the api repository for this project and follow the instructions in t
 3. Run ```npm install```
 4. Run ```npm run dev```
 5. Navigate to ```http://localhost:5173``` in your browser
+6. Log into the app with ```justin@gmail.com```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
